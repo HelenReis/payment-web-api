@@ -15,21 +15,9 @@ namespace Payment.Data.Repositories
             _context = context;
         }
 
-        public Bank Create(Bank bank)
+        public void Create(Bank bank)
         {
-            try
-            {
-                _context.Add(bank);
-                //await _context.SaveChangesAsync();
-                Console.WriteLine("ok");
-                return bank;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                throw new Exception(ex.Message);
-            }
-
+            _context.Add(bank);
         }
 
         public void Delete(Bank bank)
@@ -37,37 +25,14 @@ namespace Payment.Data.Repositories
             _context.Remove(bank);
         }
 
-        public Bank Update(Bank bank)
+        public void Update(Bank bank)
         {
             _context.Update(bank);
-            return bank;
         }
 
-        public async Task<Bank> Get(int bankId)
+        public async Task<Bank> GetById(int bankId)
         {
-            try
-            {
-                return await _context.Bank.FindAsync(bankId);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public Bank GetNo(int bankId)
-        {
-            try
-            {
-                var t = _context.Bank.Find(bankId);
-                return t;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                throw new Exception(ex.Message);
-            }
+            return await _context.FindAsync<Bank>(bankId);
         }
     }
 }

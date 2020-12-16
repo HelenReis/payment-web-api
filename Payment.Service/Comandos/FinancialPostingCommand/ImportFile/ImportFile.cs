@@ -83,12 +83,13 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
             await SaveObject(bank);
             await SaveObject(bankAccount, bank);
             SaveObject(financialPosting, bankAccount);
+
             await _unitOfWork.Commit();
         }
 
         private async Task SaveObject(BankFile bank)
         {
-            var existingBank = _repoBank.GetNo(bank.Id);
+            var existingBank = await _repoBank.GetById(bank.Id);
             if (existingBank is null)
             {
                 var newBank = new Bank(bank.Id, bank.Org);
@@ -98,7 +99,7 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
 
         private async Task SaveObject(BankAccountFile bankAccount, BankFile bank)
         {
-            var existingBankAccount = await _repoBankAccount.Get(bankAccount.Id);
+            var existingBankAccount = await _repoBankAccount.GetById(bankAccount.Id);
             if (existingBankAccount is null)
             {
                 var newBankAccount = new BankAccount(bankAccount.Id, bank.Id, _params.ClientId);
@@ -108,10 +109,11 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
 
         private void SaveObject(IEnumerable<FinancialPostingFile> financialPosting, BankAccountFile bankAccount)
         {
-            var financials =
-                financialPosting.Select(
-                    t => new FinancialPosting(
-                            t.Trnamt, t.Dtposted, t.Fitid, t.Memo, t.Trntype, bankAccount.Id));
+            var financials = financialPosting.Select(
+                t => new FinancialPosting(
+                    t.Trnamt, t.Dtposted,
+                    t.Fitid, t.Memo,
+                    t.Trntype, bankAccount.Id));
 
             _repoFinancialPosting.CreateCollection(financials);
         }

@@ -8,12 +8,12 @@ namespace Payment.Data.Repositories
 {
     public interface IFinancialPostingRepository
     {
-        FinancialPosting Create(FinancialPosting financialPosting);
+        void Create(FinancialPosting financialPosting);
 
-        FinancialPosting Update(FinancialPosting financialPosting);
+        void Update(FinancialPosting financialPosting);
 
         void Delete(FinancialPosting financialPosting);
 
-        IEnumerable<FinancialPosting> CreateCollection(IEnumerable<FinancialPosting> financialPosting);
+        void CreateCollection(IEnumerable<FinancialPosting> financialPosting);
     }
 }

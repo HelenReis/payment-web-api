@@ -14,16 +14,14 @@ namespace Payment.Data.Repositories
             _context = context;
         }
 
-        public FinancialPosting Create(FinancialPosting financial)
+        public void Create(FinancialPosting financial)
         {
             _context.Add(financial);
-            return financial;
         }
 
-        public FinancialPosting Update(FinancialPosting financial)
+        public void Update(FinancialPosting financial)
         {
             _context.Update(financial);
-            return financial;
         }
 
         public void Delete(FinancialPosting financial)
@@ -31,10 +29,9 @@ namespace Payment.Data.Repositories
             _context.Remove(financial);
         }
 
-        public IEnumerable<FinancialPosting> CreateCollection(IEnumerable<FinancialPosting> financialPosting)
+        public void CreateCollection(IEnumerable<FinancialPosting> financialPosting)
         {
             _context.AddRange(financialPosting);
-            return financialPosting;
         }
     }
 }

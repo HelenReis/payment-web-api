@@ -15,10 +15,9 @@ namespace Payment.Data.Repositories
             _context = context;
         }
 
-        public BankAccount Create(BankAccount bankAccount)
+        public void Create(BankAccount bankAccount)
         {
             _context.Add(bankAccount);
-            return bankAccount;
         }
 
         public void Delete(BankAccount bankAccount)
@@ -26,10 +25,9 @@ namespace Payment.Data.Repositories
             _context.Remove(bankAccount);
         }
 
-        public BankAccount Update(BankAccount bankAccount)
+        public void Update(BankAccount bankAccount)
         {
             _context.Update(bankAccount);
-            return bankAccount;
         }
 
         public async Task<BankAccount> GetById(int bankAccountId)

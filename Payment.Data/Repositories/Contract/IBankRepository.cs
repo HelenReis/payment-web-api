@@ -8,9 +8,9 @@ namespace Payment.Data.Repositories
 {
     public interface IBankRepository
     {
-        Bank Create(Bank bank);
+        void Create(Bank bank);
 
-        Bank Update(Bank bank);
+        void Update(Bank bank);
 
         void Delete(Bank bank);
 

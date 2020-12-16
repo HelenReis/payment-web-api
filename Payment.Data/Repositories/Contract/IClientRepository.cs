@@ -8,9 +8,9 @@ namespace Payment.Data.Repositories
 {
     public interface IClientRepository
     {
-        Client Create(Client bank);
+        void Create(Client bank);
 
-        Client Update(Client bank);
+        void Update(Client bank);
 
         void Delete(Client bank);
     }
