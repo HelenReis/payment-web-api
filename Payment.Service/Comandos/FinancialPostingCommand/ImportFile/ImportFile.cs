@@ -42,17 +42,11 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
             try
             {
                 /* CRIAR PRIMEIRO CLIENTE AUTOMATICO*/
-                /*if (!FileValidation())
-                {
-                    return
-                        new ImportFileResult { Sucesso = false, Msg = "Formato de arquivo não suportado." };
-                }*/
+                if (!FileValidation())
+                    return new ImportFileResult 
+                        { Sucesso = false, Msg = "Formato de arquivo não suportado." };
 
                 await ReadFile();
-
-                /* -- PROCURAR ALGUM DADO NO ARQUIVO PARA RECONHECER O ID DO ARQUIVO (PARA NÃO IMPORTAR O MESMO
-                 *  ARQUIVO NOVAMENTE. SE FOR IGUAL, AVISAR: ARQUIVO JÁ IMPORTADO.
-                 * -- FAZER TRATATIVA APENAS PARA BANK E BANKACCOUNT CASO JÁ EXISTIR NO BANCO.)*/
 
                 return new ImportFileResult { Sucesso = true, Msg = "OK." };
 
@@ -65,7 +59,7 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
 
         private bool FileValidation()
         {
-            if (!_params.File.Name.EndsWith(".ofx"))
+            if (!Path.GetExtension(_params.File.FileName).Equals(".ofx"))
                 return false;
 
             return true;
@@ -109,6 +103,7 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
 
         private void SaveObject(IEnumerable<FinancialPostingFile> financialPosting, BankAccountFile bankAccount)
         {
+            /* VALIDAR SE ARQUIVO JÁ FOI SALVO */
             var financials = financialPosting.Select(
                 t => new FinancialPosting(
                     t.Trnamt, t.Dtposted,
