@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Payment.Data.EntityConfiguration;
 using Payment.Domain.Models;
 
 namespace Payment.Data
@@ -14,5 +15,12 @@ namespace Payment.Data
         public DbSet<FinancialPosting> FinancialPosting { get; set; }
 
         public DbSet<Bank> Bank { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new BankAccountConfig());
+            modelBuilder.ApplyConfiguration(new FinancialPostingConfig());
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

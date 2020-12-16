@@ -19,6 +19,7 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
         private readonly IFinancialPostingRepository _repoFinancialPosting;
         private readonly IBankRepository _repoBank;
         private readonly IBankAccountRepository _repoBankAccount;
+        private readonly IClientRepository _repoClient;
         private readonly IUnitOfWork _unitOfWork;
 
         private ImportFileParams _params;
@@ -27,11 +28,13 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
             IFinancialPostingRepository repoFinancialPosting,
             IBankAccountRepository repoBankAccount,
             IBankRepository repoBank,
+            IClientRepository repoClient,
             IUnitOfWork unitOfWork)
         {
             _repoFinancialPosting = repoFinancialPosting;
             _repoBankAccount = repoBankAccount;
             _repoBank = repoBank;
+            _repoClient = repoClient;
             _unitOfWork = unitOfWork;
         }
 
@@ -41,11 +44,12 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
 
             try
             {
+                /* FAZER ANY NO REPO */
                 /* CRIAR PRIMEIRO CLIENTE AUTOMATICO CASO NÃO EXISTIR, COM NOME ALEATÓRIO. */
                 /*  */
                 if (!FileValidation())
-                    return new ImportFileResult 
-                        { Sucesso = false, Msg = "Formato de arquivo não suportado." };
+                    return new ImportFileResult
+                    { Sucesso = false, Msg = "Formato de arquivo não suportado." };
 
                 await ReadFile();
 
@@ -75,11 +79,22 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
 
         private async Task InsertData(BankFile bank, BankAccountFile bankAccount, IEnumerable<FinancialPostingFile> financialPosting)
         {
+            await SaveObject();
             await SaveObject(bank);
             await SaveObject(bankAccount, bank);
             SaveObject(financialPosting, bankAccount);
 
             await _unitOfWork.Commit();
+        }
+
+        private async Task SaveObject()
+        {
+            var existingClient = await _repoClient.Any(_params.ClientId);
+            if (!existingClient)
+            {
+                var newBankAccount = new Client(_params.ClientId, "Aleatório");
+                _repoClient.Create(newBankAccount);
+            }
         }
 
         private async Task SaveObject(BankFile bank)

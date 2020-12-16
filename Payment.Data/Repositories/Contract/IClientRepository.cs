@@ -8,10 +8,14 @@ namespace Payment.Data.Repositories
 {
     public interface IClientRepository
     {
-        void Create(Client bank);
+        void Create(Client client);
 
-        void Update(Client bank);
+        void Update(Client client);
 
-        void Delete(Client bank);
+        void Delete(Client client);
+
+        Task<Client> GetById(int clientId);
+
+        Task<bool> Any(int clientId);
     }
 }

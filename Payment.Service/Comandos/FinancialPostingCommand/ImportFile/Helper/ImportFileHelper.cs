@@ -109,8 +109,10 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile.Helper
                 _financialPostingFile.Add(_financial);
         }
 
-        private string CleanTag(string line, string tag) => new Regex($"[</>]*({tag})*(\\t)*").Replace(line, string.Empty);
+        private string CleanTag(string line, string tag) => new Regex($"[</>]*({tag})*").Replace(line, string.Empty);
 
-        private string CleanTagSpaces(string line) => line.Replace(" ", string.Empty);
+        //private string CleanTagSpaces(string line) => line.Replace(" ", string.Empty);
+
+        private string CleanTagSpaces(string line) => new Regex(@"[\s]*").Replace(line, string.Empty);
     }
 }

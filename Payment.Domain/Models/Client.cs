@@ -4,6 +4,12 @@ namespace Payment.Domain.Models
 {
     public class Client
     {
+        public Client(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
         /// <summary>
         /// client id
         /// </summary>

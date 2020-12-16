@@ -38,7 +38,7 @@ namespace Payment.Data.Migrations
                 name: "BankAccount",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     BankId = table.Column<int>(nullable: false),
                     ClientId = table.Column<int>(nullable: false)
@@ -71,7 +71,7 @@ namespace Payment.Data.Migrations
                     Fitid = table.Column<long>(nullable: false),
                     Memo = table.Column<string>(nullable: true),
                     Trntype = table.Column<int>(nullable: false),
-                    BankAccountId = table.Column<int>(nullable: false)
+                    BankAccountId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {

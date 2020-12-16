@@ -4,7 +4,7 @@ namespace Payment.Domain.Models
 {
     public class BankAccount
     {
-        public BankAccount(int id, int bankId, int clientId)
+        public BankAccount(long id, int bankId, int clientId)
         {
             Id = id;
             BankId = bankId;
@@ -14,7 +14,7 @@ namespace Payment.Domain.Models
         /// <summary>
         /// bank account id
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// bank id

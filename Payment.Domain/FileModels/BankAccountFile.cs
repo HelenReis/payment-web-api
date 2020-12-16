@@ -7,12 +7,12 @@ namespace Payment.Domain.FileModels
         /// <summary>
         /// bank account id
         /// </summary>
-        public int Id
+        public long Id
         {
             get
             {
                 IdFromFile = IdFromFile.Replace("-", "");
-                return int.Parse(IdFromFile);
+                return long.Parse(IdFromFile);
             }
         }
 

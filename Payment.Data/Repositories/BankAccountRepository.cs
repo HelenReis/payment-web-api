@@ -30,7 +30,7 @@ namespace Payment.Data.Repositories
             _context.Update(bankAccount);
         }
 
-        public async Task<BankAccount> GetById(int bankAccountId)
+        public async Task<BankAccount> GetById(long bankAccountId)
         {
             return await _context.FindAsync<BankAccount>(bankAccountId);
         }

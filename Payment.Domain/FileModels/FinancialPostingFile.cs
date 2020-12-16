@@ -25,11 +25,9 @@ namespace Payment.Domain.FileModels
         {
             get
             {
-                var date = DtpostedFromFile.AsSpan().Slice(0, 10);
-                var formatInfo = Thread.CurrentThread.CurrentCulture;
-
-                DateTime.TryParseExact(date, "dd/MM/yyyy", formatInfo, DateTimeStyles.None, out var dateParsed);
-
+                var date = DtpostedFromFile.AsSpan().Slice(0, 14);
+                var formatInfo = CultureInfo.InvariantCulture;
+                DateTime.TryParseExact(date, "yyyyMMddHHmmss", formatInfo, DateTimeStyles.None, out var dateParsed);
                 return dateParsed;
             }
         }

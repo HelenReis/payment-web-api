@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Payment.Data.Repositories
 {
@@ -27,6 +28,16 @@ namespace Payment.Data.Repositories
         public void Delete(Client client)
         {
             _context.Remove(client);
+        }
+
+        public async Task<Client> GetById(int clientId)
+        {
+            return await _context.FindAsync<Client>(clientId);
+        }
+
+        public async Task<bool> Any(int clientId)
+        {
+            return !(await _context.FindAsync<Client>(clientId) is null);
         }
     }
 }

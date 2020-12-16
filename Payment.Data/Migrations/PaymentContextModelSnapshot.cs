@@ -33,9 +33,9 @@ namespace Payment.Data.Migrations
 
             modelBuilder.Entity("Payment.Domain.Models.BankAccount", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
                     b.Property<int>("BankId")
                         .HasColumnType("int");
@@ -72,8 +72,8 @@ namespace Payment.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("BankAccountId")
-                        .HasColumnType("int");
+                    b.Property<long>("BankAccountId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("Dtposted")
                         .HasColumnType("datetime");

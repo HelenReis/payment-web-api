@@ -4,7 +4,7 @@ namespace Payment.Domain.Models
 {
     public class FinancialPosting
     {
-        public FinancialPosting(double trnamt, DateTime dtposted, long fitid, string memo, TypeFinancial trntype, int bankAccountId)
+        public FinancialPosting(double trnamt, DateTime dtposted, long fitid, string memo, TypeFinancial trntype, long bankAccountId)
         {
             Trnamt = trnamt;
             Dtposted = dtposted;
@@ -47,7 +47,7 @@ namespace Payment.Domain.Models
         /// <summary>
         /// BankAccountId
         /// </summary>
-        public int BankAccountId { get; set; }
+        public long BankAccountId { get; set; }
 
         /// <summary>
         /// BankAccount

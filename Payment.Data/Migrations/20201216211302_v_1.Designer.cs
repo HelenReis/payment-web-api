@@ -9,7 +9,7 @@ using Payment.Data;
 namespace Payment.Data.Migrations
 {
     [DbContext(typeof(PaymentContext))]
-    [Migration("20201216173011_v_1")]
+    [Migration("20201216211302_v_1")]
     partial class v_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,9 +35,9 @@ namespace Payment.Data.Migrations
 
             modelBuilder.Entity("Payment.Domain.Models.BankAccount", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
                     b.Property<int>("BankId")
                         .HasColumnType("int");
@@ -74,8 +74,8 @@ namespace Payment.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("BankAccountId")
-                        .HasColumnType("int");
+                    b.Property<long>("BankAccountId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("Dtposted")
                         .HasColumnType("datetime");

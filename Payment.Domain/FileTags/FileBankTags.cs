@@ -10,7 +10,7 @@ namespace Payment.Domain.FileTags
 
         public string Value { get; set; }
 
-        public static FileBankTags Id { get { return new FileBankTags("FID"); } }
+        public static FileBankTags Id { get { return new FileBankTags("BANKID"); } }
         public static FileBankTags Org { get { return new FileBankTags("ORG"); } }
     }
 }
