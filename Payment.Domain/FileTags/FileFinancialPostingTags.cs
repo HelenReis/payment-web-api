@@ -15,5 +15,7 @@ namespace Payment.Domain.FileTags
         public static FileFinancialPostingTags Fitid { get { return new FileFinancialPostingTags("FITID"); } }
         public static FileFinancialPostingTags Trntype { get { return new FileFinancialPostingTags("TRNTYPE"); } }
         public static FileFinancialPostingTags Memo { get { return new FileFinancialPostingTags("MEMO"); } }
+        public static FileFinancialPostingTags OpenTag { get { return new FileFinancialPostingTags("<STMTTRN>"); } }
+        public static FileFinancialPostingTags CloseTag { get { return new FileFinancialPostingTags("</STMTTRN>"); } }
     }
 }
