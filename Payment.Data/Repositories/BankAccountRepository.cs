@@ -26,15 +26,15 @@ namespace Payment.Data.Repositories
             _context.Remove(bankAccount);
         }
 
-        public async Task<BankAccount> Get(int bankAccountId)
-        {
-            return await _context.FindAsync<BankAccount>(bankAccountId);
-        }
-
         public BankAccount Update(BankAccount bankAccount)
         {
             _context.Update(bankAccount);
             return bankAccount;
+        }
+
+        public async Task<BankAccount> GetById(int bankAccountId)
+        {
+            return await _context.FindAsync<BankAccount>(bankAccountId);
         }
     }
 }

@@ -20,15 +20,15 @@ namespace Payment.Data.Repositories
             return financial;
         }
 
-        public void Delete(FinancialPosting financial)
-        {
-            _context.Remove(financial);
-        }
-
         public FinancialPosting Update(FinancialPosting financial)
         {
             _context.Update(financial);
             return financial;
+        }
+
+        public void Delete(FinancialPosting financial)
+        {
+            _context.Remove(financial);
         }
 
         public IEnumerable<FinancialPosting> CreateCollection(IEnumerable<FinancialPosting> financialPosting)

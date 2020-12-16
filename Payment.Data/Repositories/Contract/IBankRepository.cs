@@ -14,8 +14,6 @@ namespace Payment.Data.Repositories
 
         void Delete(Bank bank);
 
-        Task<Bank> Get(int bankId);
-
-        Bank GetNo(int bankId);
+        Task<Bank> GetById(int bankId);
     }
 }

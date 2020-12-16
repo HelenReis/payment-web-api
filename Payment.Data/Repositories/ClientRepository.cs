@@ -20,15 +20,15 @@ namespace Payment.Data.Repositories
             return client;
         }
 
-        public void Delete(Client client)
-        {
-            _context.Remove(client);
-        }
-
         public Client Update(Client client)
         {
             _context.Update(client);
             return client;
+        }
+
+        public void Delete(Client client)
+        {
+            _context.Remove(client);
         }
     }
 }

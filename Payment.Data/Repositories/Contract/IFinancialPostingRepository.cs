@@ -12,8 +12,8 @@ namespace Payment.Data.Repositories
 
         FinancialPosting Update(FinancialPosting financialPosting);
 
-        IEnumerable<FinancialPosting> CreateCollection(IEnumerable<FinancialPosting> financialPosting);
-
         void Delete(FinancialPosting financialPosting);
+
+        IEnumerable<FinancialPosting> CreateCollection(IEnumerable<FinancialPosting> financialPosting);
     }
 }
