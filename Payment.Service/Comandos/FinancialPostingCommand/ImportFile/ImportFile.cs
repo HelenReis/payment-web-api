@@ -41,7 +41,8 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
 
             try
             {
-                /* CRIAR PRIMEIRO CLIENTE AUTOMATICO*/
+                /* CRIAR PRIMEIRO CLIENTE AUTOMATICO CASO NÃO EXISTIR, COM NOME ALEATÓRIO. */
+                /*  */
                 if (!FileValidation())
                     return new ImportFileResult 
                         { Sucesso = false, Msg = "Formato de arquivo não suportado." };
