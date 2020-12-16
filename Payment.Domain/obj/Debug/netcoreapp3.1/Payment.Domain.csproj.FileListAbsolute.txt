@@ -1,0 +1,9 @@
+C:\Projetos\Payment.WebApi\Payment.Domain\bin\Debug\netcoreapp3.1\Payment.Domain.deps.json
+C:\Projetos\Payment.WebApi\Payment.Domain\bin\Debug\netcoreapp3.1\Payment.Domain.dll
+C:\Projetos\Payment.WebApi\Payment.Domain\bin\Debug\netcoreapp3.1\Payment.Domain.pdb
+C:\Projetos\Payment.WebApi\Payment.Domain\obj\Debug\netcoreapp3.1\Payment.Domain.csprojAssemblyReference.cache
+C:\Projetos\Payment.WebApi\Payment.Domain\obj\Debug\netcoreapp3.1\Payment.Domain.AssemblyInfoInputs.cache
+C:\Projetos\Payment.WebApi\Payment.Domain\obj\Debug\netcoreapp3.1\Payment.Domain.AssemblyInfo.cs
+C:\Projetos\Payment.WebApi\Payment.Domain\obj\Debug\netcoreapp3.1\Payment.Domain.csproj.CoreCompileInputs.cache
+C:\Projetos\Payment.WebApi\Payment.Domain\obj\Debug\netcoreapp3.1\Payment.Domain.dll
+C:\Projetos\Payment.WebApi\Payment.Domain\obj\Debug\netcoreapp3.1\Payment.Domain.pdb
