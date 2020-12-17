@@ -8,6 +8,7 @@ namespace Payment.Domain.Models.Enum
     {
         Checking = 1,
         Premium = 2,
-        Business = 3
+        Business = 3,
+        Other = 4
     }
 }

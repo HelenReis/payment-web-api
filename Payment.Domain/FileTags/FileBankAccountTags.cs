@@ -12,5 +12,6 @@ namespace Payment.Domain.FileTags
 
         public static FileBankAccountTags Id { get { return new FileBankAccountTags("ACCTID"); } }
         public static FileBankAccountTags BankId { get { return new FileBankAccountTags("BANKID"); } }
+        public static FileBankAccountTags TypeAccount { get { return new FileBankAccountTags("ACCTTYPE"); } }
     }
 }

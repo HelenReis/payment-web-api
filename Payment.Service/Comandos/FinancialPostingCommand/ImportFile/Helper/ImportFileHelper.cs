@@ -86,6 +86,12 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile.Helper
                 line = CleanTag(line, FileBankAccountTags.BankId.Value);
                 _bankAccountFile.BankIdFromFile = line;
             }
+
+            if (line.Contains(FileBankAccountTags.TypeAccount.Value))
+            {
+                line = CleanTag(line, FileBankAccountTags.TypeAccount.Value);
+                _bankAccountFile.TypeAccountFile = line;
+            }
         }
         #endregion
 

@@ -6,11 +6,12 @@ namespace Payment.Domain.Models
 {
     public class BankAccount
     {
-        public BankAccount(long id, int bankId, int clientId)
+        public BankAccount(long id, int bankId, int clientId, TypeAccount typeAccount)
         {
             Id = id;
             BankId = bankId;
             ClientId = clientId;
+            TypeAccount = typeAccount;
         }
 
         /// <summary>

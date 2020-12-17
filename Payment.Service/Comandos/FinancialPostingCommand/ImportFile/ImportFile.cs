@@ -131,7 +131,7 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
             var existingBankAccount = await _repoBankAccount.GetById(bankAccount.Id);
             if (existingBankAccount is null)
             {
-                var newBankAccount = new BankAccount(bankAccount.Id, bank.Id, _params.ClientId);
+                var newBankAccount = new BankAccount(bankAccount.Id, bank.Id, _params.ClientId, bankAccount.TypeAccount);
                 _repoBankAccount.Create(newBankAccount);
             }
         }
