@@ -1,6 +1,8 @@
-﻿using Payment.Domain.Models;
+﻿using Payment.Domain.DTOs;
+using Payment.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +16,8 @@ namespace Payment.Data.Repositories
 
         void Delete(BankAccount bankAccount);
 
-        Task<BankAccount> GetById(long bankAccountId);
+        Task<BankAccountDTO> GetById(long bankAccountId);
+
+        IQueryable<BankAccount> Query();
     }
 }

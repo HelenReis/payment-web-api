@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Payment.Data.Repositories;
 using Payment.Domain.Models;
+using Payment.Service.Queries.BankAccount.SelectBankAccount;
+using Payment.Service.Queries.Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,20 +16,45 @@ namespace Payment.WebApi.Controllers
     [Route("[controller]")]
     public class BankAccountController : ControllerBase
     {
-        private readonly IBankAccountRepository _repository;
-
+        private readonly IQueryService<SelectBankAccountParams, SelectBankAccountResult> _queryService;
         private readonly ILogger<BankAccountController> _logger;
 
-        public BankAccountController(ILogger<BankAccountController> logger, IBankAccountRepository repository)
+        public BankAccountController(
+            ILogger<BankAccountController> logger, 
+            IQueryService<SelectBankAccountParams, SelectBankAccountResult> queryService)
         {
             _logger = logger;
-            _repository = repository;
+            _queryService = queryService;
         }
 
-        [HttpGet("{bankAccountId:int}")]
-        public async Task Get(int bankAccountId)
+        [HttpGet("{bankAccountId}")]
+        public async Task<ActionResult> Get(long bankAccountId)
         {
-            
+            try
+            {
+                var res = await _queryService.Query(new SelectBankAccountParams(bankAccountId));
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPatch("")]
+        public async Task<ActionResult> Patch(long bankAccountId)
+        {
+            try
+            {
+                var res = await _queryService.Query(new SelectBankAccountParams(bankAccountId));
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

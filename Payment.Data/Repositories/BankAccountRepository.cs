@@ -1,6 +1,9 @@
-﻿using Payment.Domain.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Payment.Domain.DTOs;
+using Payment.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,9 +33,26 @@ namespace Payment.Data.Repositories
             _context.Update(bankAccount);
         }
 
-        public async Task<BankAccount> GetById(long bankAccountId)
+        public async Task<BankAccountDTO> GetById(long bankAccountId)
         {
-            return await _context.FindAsync<BankAccount>(bankAccountId);
+            var imported = await _context.BankAccount
+                .Where(bc => bc.Id == bankAccountId)
+                .Select(n => new BankAccountDTO
+                {
+                    Id = n.Id,
+                    Bank = n.Bank,
+                    FinancialPostings = n.FinancialPostings
+                })
+                .FirstOrDefaultAsync();
+
+            return imported;
+        }
+
+
+        public IQueryable<BankAccount> Query()
+        {
+            return _context.BankAccount.AsQueryable();
         }
     }
+
 }

@@ -20,6 +20,7 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
         private readonly IBankRepository _repoBank;
         private readonly IBankAccountRepository _repoBankAccount;
         private readonly IClientRepository _repoClient;
+        private readonly IImportedFileRepository _repoImportedFile;
         private readonly IUnitOfWork _unitOfWork;
 
         private ImportFileParams _params;
@@ -29,12 +30,14 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
             IBankAccountRepository repoBankAccount,
             IBankRepository repoBank,
             IClientRepository repoClient,
+            IImportedFileRepository repoImportedFile,
             IUnitOfWork unitOfWork)
         {
             _repoFinancialPosting = repoFinancialPosting;
             _repoBankAccount = repoBankAccount;
             _repoBank = repoBank;
             _repoClient = repoClient;
+            _repoImportedFile = repoImportedFile;
             _unitOfWork = unitOfWork;
         }
 
@@ -44,17 +47,11 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
 
             try
             {
-                /* FAZER ANY NO REPO */
-                /* CRIAR PRIMEIRO CLIENTE AUTOMATICO CASO NÃO EXISTIR, COM NOME ALEATÓRIO. */
-                /*  */
                 if (!FileValidation())
-                    return new ImportFileResult
-                    { Sucesso = false, Msg = "Formato de arquivo não suportado." };
+                    return new ImportFileResult(false, "Formato de arquivo não suportado.");
 
-                await ReadFile();
-
-                return new ImportFileResult { Sucesso = true, Msg = "OK." };
-
+                var (importedFile, bank, bankAccount, financialPosting) = await ReadFile();
+                return await InsertData(importedFile, bank, bankAccount, financialPosting);
             }
             catch (Exception ex)
             {
@@ -62,31 +59,49 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
             }
         }
 
-        private bool FileValidation()
-        {
-            if (!Path.GetExtension(_params.File.FileName).Equals(".ofx"))
-                return false;
+        #region[Validação da extensão do arquivo]
+        private bool FileValidation() => Path.GetExtension(_params.File.FileName).Equals(".ofx");
+        #endregion
 
-            return true;
-        }
-
-        private async Task ReadFile()
+        #region[Ler arquivo]
+        private async Task<(ImportedFileFile, BankFile, BankAccountFile, IEnumerable<FinancialPostingFile>)> ReadFile()
         {
             var helper = new ImportFileHelper(_params.File);
-            var (bank, bankAccount, financialPosting) = await helper.ImportFile();
-            await InsertData(bank, bankAccount, financialPosting);
+            return await helper.ReadFile();   
         }
+        #endregion
 
-        private async Task InsertData(BankFile bank, BankAccountFile bankAccount, IEnumerable<FinancialPostingFile> financialPosting)
+        #region[Insere dados das tags nos objetos e no banco]
+        private async Task<ImportFileResult> InsertData(ImportedFileFile importedFile, BankFile bank, BankAccountFile bankAccount, IEnumerable<FinancialPostingFile> financialPosting)
         {
+            if (await ExistingImportedFile(importedFile, bankAccount))
+                return new ImportFileResult(false, "Arquivo já importado na base de dados.");
+
             await SaveObject();
             await SaveObject(bank);
-            await SaveObject(bankAccount, bank);
+            await SaveObject(bankAccount, bank); 
             SaveObject(financialPosting, bankAccount);
-
+            SaveObject(importedFile, bankAccount);
             await _unitOfWork.Commit();
-        }
 
+            return new ImportFileResult(true, "OK");
+        }
+        #endregion
+
+        #region[Verifica se o arquivo foi importado antes]
+        private async Task<bool> ExistingImportedFile(ImportedFileFile importedFile, BankAccountFile bankAccount)
+            => await _repoImportedFile.Any(bankAccount.Id, importedFile.Dtserver);
+        #endregion
+
+        #region [Insere arquivo importado]
+        private void SaveObject(ImportedFileFile importedFile, BankAccountFile bankAccount)
+        {
+            var importFile = new ImportedFile(importedFile.Dtserver, bankAccount.Id);
+            _repoImportedFile.Create(importFile);
+        }
+        #endregion]
+
+        #region [Insere cliente]
         private async Task SaveObject()
         {
             var existingClient = await _repoClient.Any(_params.ClientId);
@@ -96,7 +111,9 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
                 _repoClient.Create(newBankAccount);
             }
         }
+        #endregion
 
+        #region [Insere banco]
         private async Task SaveObject(BankFile bank)
         {
             var existingBank = await _repoBank.GetById(bank.Id);
@@ -106,7 +123,9 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
                 _repoBank.Create(newBank);
             }
         }
+        #endregion
 
+        #region [Insere conta bancária]
         private async Task SaveObject(BankAccountFile bankAccount, BankFile bank)
         {
             var existingBankAccount = await _repoBankAccount.GetById(bankAccount.Id);
@@ -116,10 +135,11 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
                 _repoBankAccount.Create(newBankAccount);
             }
         }
+        #endregion
 
+        #region[Insere lançamentos financeiros]
         private void SaveObject(IEnumerable<FinancialPostingFile> financialPosting, BankAccountFile bankAccount)
         {
-            /* VALIDAR SE ARQUIVO JÁ FOI SALVO */
             var financials = financialPosting.Select(
                 t => new FinancialPosting(
                     t.Trnamt, t.Dtposted,
@@ -128,5 +148,6 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
 
             _repoFinancialPosting.CreateCollection(financials);
         }
+        #endregion
     }
 }

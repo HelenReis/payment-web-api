@@ -1,3 +1,5 @@
+
+using Payment.Domain.Models.Enum;
 using System.Collections.Generic;
 
 namespace Payment.Domain.Models
@@ -25,6 +27,11 @@ namespace Payment.Domain.Models
         /// client id
         /// </summary>
         public int ClientId { get; set; }
+
+        /// <summary>
+        /// type account
+        /// </summary>
+        public TypeAccount TypeAccount { get; set; }
 
         /// <summary>
         /// Bank

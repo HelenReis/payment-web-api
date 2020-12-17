@@ -16,6 +16,8 @@ namespace Payment.Data
 
         public DbSet<Bank> Bank { get; set; }
 
+        public DbSet<ImportedFile> ImportedFile { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new BankAccountConfig());

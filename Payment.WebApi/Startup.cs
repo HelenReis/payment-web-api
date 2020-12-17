@@ -9,6 +9,8 @@ using Payment.Data.Repositories;
 using Payment.Data.Repositories.Transaction.UnitOfWork;
 using Payment.Service.Comandos.Contract;
 using Payment.Service.Comandos.FinancialPostingCommand.ImportFile;
+using Payment.Service.Queries.BankAccount.SelectBankAccount;
+using Payment.Service.Queries.Contract;
 
 namespace Payment.WebApi
 {
@@ -35,12 +37,16 @@ namespace Payment.WebApi
             services.AddTransient<IBankRepository, BankRepository>();
             services.AddTransient<IClientRepository, ClientRepository>();
             services.AddTransient<IFinancialPostingRepository, FinancialPostingRepository>();
+            services.AddTransient<IImportedFileRepository, ImportedFileRepository>();
 
             // Serviços
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             //Comandos e Consultas
             services.AddTransient<ICommandService<ImportFileParams, ImportFileResult>, ImportFile>();
+
+            //Consultas
+            services.AddTransient<IQueryService<SelectBankAccountParams, SelectBankAccountResult>, SelectBankAccount>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
