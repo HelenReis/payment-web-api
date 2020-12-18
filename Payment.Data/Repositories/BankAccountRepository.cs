@@ -33,19 +33,9 @@ namespace Payment.Data.Repositories
             _context.Update(bankAccount);
         }
 
-        public async Task<BankAccountDTO> GetById(long bankAccountId)
+        public async Task<BankAccount> GetById(long bankAccountId)
         {
-            var imported = await _context.BankAccount
-                .Where(bc => bc.Id == bankAccountId)
-                .Select(n => new BankAccountDTO
-                {
-                    Id = n.Id,
-                    Bank = n.Bank,
-                    FinancialPostings = n.FinancialPostings
-                })
-                .FirstOrDefaultAsync();
-
-            return imported;
+            return await _context.FindAsync<BankAccount>(bankAccountId);
         }
 
 

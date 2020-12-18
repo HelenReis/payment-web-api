@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Payment.Data;
 using Payment.Data.Repositories;
 using Payment.Data.Repositories.Transaction.UnitOfWork;
+using Payment.Service.Comandos.BankAccount.UpdateBankAccount;
 using Payment.Service.Comandos.Contract;
 using Payment.Service.Comandos.FinancialPostingCommand.ImportFile;
 using Payment.Service.Queries.BankAccount.SelectBankAccount;
@@ -44,6 +45,7 @@ namespace Payment.WebApi
 
             //Comandos e Consultas
             services.AddTransient<ICommandService<ImportFileParams, ImportFileResult>, ImportFile>();
+            services.AddTransient<ICommandService<UpdateBankAccountParams, UpdateBankAccountResult>, UpdateBankAccount>();
 
             //Consultas
             services.AddTransient<IQueryService<SelectBankAccountParams, SelectBankAccountResult>, SelectBankAccount>();

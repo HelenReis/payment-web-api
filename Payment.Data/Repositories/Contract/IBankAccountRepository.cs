@@ -16,7 +16,7 @@ namespace Payment.Data.Repositories
 
         void Delete(BankAccount bankAccount);
 
-        Task<BankAccountDTO> GetById(long bankAccountId);
+        Task<BankAccount> GetById(long bankAccountId);
 
         IQueryable<BankAccount> Query();
     }

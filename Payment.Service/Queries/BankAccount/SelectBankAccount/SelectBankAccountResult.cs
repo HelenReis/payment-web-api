@@ -8,7 +8,7 @@ namespace Payment.Service.Queries.BankAccount.SelectBankAccount
 {
     public class SelectBankAccountResult : IBaseResult
     {
-        public SelectBankAccountResult(bool sucesso, string msg, BankAccountDTO bankAccount)
+        public SelectBankAccountResult(bool sucesso, string msg, Domain.Models.BankAccount bankAccount)
         {
             Sucesso = sucesso;
             Msg = msg;
@@ -19,6 +19,6 @@ namespace Payment.Service.Queries.BankAccount.SelectBankAccount
 
         public string Msg { get; set; }
 
-        public BankAccountDTO BankAccount { get; set; }
+        public Domain.Models.BankAccount BankAccount { get; set; }
     }
 }

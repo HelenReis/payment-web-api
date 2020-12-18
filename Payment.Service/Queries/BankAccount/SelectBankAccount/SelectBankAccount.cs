@@ -20,15 +20,7 @@ namespace Payment.Service.Queries.BankAccount.SelectBankAccount
         {
             try
             {
-                var bankAccount = await _repoBankAccount.Query()
-                    .Where(bc => bc.Id == param.BankAccountId)
-                    .Select(n => new BankAccountDTO
-                    {
-                        Id = n.Id,
-                        Bank = n.Bank,
-                        FinancialPostings = n.FinancialPostings
-                    })
-                    .FirstOrDefaultAsync();
+                var bankAccount = await _repoBankAccount.GetById(param.BankAccountId);
 
                 return new SelectBankAccountResult(true, "OK", bankAccount);
             }
