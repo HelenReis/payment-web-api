@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
+namespace Payment.Service.Comandos.FinancialPosting.ImportFile
 {
     public class ImportFile : ICommandService<ImportFileParams, ImportFileResult>
     {
@@ -141,7 +141,7 @@ namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
         private void SaveObject(IEnumerable<FinancialPostingFile> financialPosting, BankAccountFile bankAccount)
         {
             var financials = financialPosting.Select(
-                t => new FinancialPosting(
+                t => new Domain.Models.FinancialPosting(
                     t.Trnamt, t.Dtposted,
                     t.Fitid, t.Memo,
                     t.Trntype, bankAccount.Id));

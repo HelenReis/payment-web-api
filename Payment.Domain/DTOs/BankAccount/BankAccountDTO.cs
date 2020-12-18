@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Payment.Domain.DTOs
 {
-    public class BankAccountPatch
+    public class BankAccountDTO
     {
         /// <summary>
         /// type account

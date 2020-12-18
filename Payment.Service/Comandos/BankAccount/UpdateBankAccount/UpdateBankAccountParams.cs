@@ -8,7 +8,7 @@ namespace Payment.Service.Comandos.BankAccount.UpdateBankAccount
 {
     public class UpdateBankAccountParams : IBaseParams
     {
-        public UpdateBankAccountParams(long bankAccountId, BankAccountPatch bankAccountPatch)
+        public UpdateBankAccountParams(long bankAccountId, BankAccountDTO bankAccountPatch)
         {
             BankAccountId = bankAccountId;
             BankAccountPatch = bankAccountPatch;
@@ -16,6 +16,6 @@ namespace Payment.Service.Comandos.BankAccount.UpdateBankAccount
 
         public long BankAccountId { get; set; }
 
-        public BankAccountPatch BankAccountPatch { get; set; }
+        public BankAccountDTO BankAccountPatch { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Payment.Service.Comandos.FinancialPostingCommand.ImportFile
+namespace Payment.Service.Comandos.FinancialPosting.ImportFile
 {
     public class ImportFileParams : IBaseParams
     {

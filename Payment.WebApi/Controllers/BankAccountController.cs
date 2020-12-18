@@ -49,7 +49,7 @@ namespace Payment.WebApi.Controllers
         }
 
         [HttpPatch("{bankAccountId:long}")]
-        public async Task<ActionResult> Patch(long bankAccountId, BankAccountPatch bankAccountPatch)
+        public async Task<ActionResult> Patch(long bankAccountId, BankAccountDTO bankAccountPatch)
         {
             try
             {
