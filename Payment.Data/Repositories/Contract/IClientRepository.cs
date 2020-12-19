@@ -16,6 +16,6 @@ namespace Payment.Data.Repositories
 
         Task<Client> GetById(int clientId);
 
-        Task<bool> Any(int clientId);
+        Task<bool> AnyAsync(int clientId);
     }
 }

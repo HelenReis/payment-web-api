@@ -1,6 +1,7 @@
 ﻿using Payment.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Payment.Data.Repositories
@@ -32,6 +33,11 @@ namespace Payment.Data.Repositories
         public void CreateCollection(IEnumerable<FinancialPosting> financialPosting)
         {
             _context.AddRange(financialPosting);
+        }
+
+        public IQueryable<FinancialPosting> Query()
+        {
+            return _context.FinancialPosting.AsQueryable();
         }
     }
 }

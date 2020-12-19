@@ -1,4 +1,5 @@
-﻿using Payment.Domain.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Payment.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,9 +36,9 @@ namespace Payment.Data.Repositories
             return await _context.FindAsync<Client>(clientId);
         }
 
-        public async Task<bool> Any(int clientId)
+        public async Task<bool> AnyAsync(int clientId)
         {
-            return !(await _context.FindAsync<Client>(clientId) is null);
+            return await _context.Client.AnyAsync(c => c.Id == clientId);
         }
     }
 }

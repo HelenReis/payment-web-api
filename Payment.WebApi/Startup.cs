@@ -9,9 +9,12 @@ using Payment.Data.Repositories;
 using Payment.Data.Repositories.Transaction.UnitOfWork;
 using Payment.Service.Comandos.BankAccount.UpdateBankAccount;
 using Payment.Service.Comandos.Contract;
+using Payment.Service.Comandos.FinancialPosting.ImportFile;
+using Payment.Service.Comandos.FinancialPosting.InsertFinancialPosting;
 using Payment.Service.Comandos.FinancialPostingCommand.ImportFile;
 using Payment.Service.Queries.BankAccount.SelectBankAccount;
 using Payment.Service.Queries.Contract;
+using Payment.Service.Shared;
 
 namespace Payment.WebApi
 {
@@ -46,6 +49,7 @@ namespace Payment.WebApi
             //Comandos e Consultas
             services.AddTransient<ICommandService<ImportFileParams, ImportFileResult>, ImportFile>();
             services.AddTransient<ICommandService<UpdateBankAccountParams, UpdateBankAccountResult>, UpdateBankAccount>();
+            services.AddTransient<ICommandService<InsertFinancialPostingParams, InsertFinancialPostingResult>, InsertFinancialPosting>();
 
             //Consultas
             services.AddTransient<IQueryService<SelectBankAccountParams, SelectBankAccountResult>, SelectBankAccount>();

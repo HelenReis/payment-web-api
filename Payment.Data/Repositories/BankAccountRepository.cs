@@ -38,10 +38,14 @@ namespace Payment.Data.Repositories
             return await _context.FindAsync<BankAccount>(bankAccountId);
         }
 
-
         public IQueryable<BankAccount> Query()
         {
             return _context.BankAccount.AsQueryable();
+        }
+
+        public async Task<bool> AnyAsync(long bankAccountId)
+        {
+            return await _context.BankAccount.AnyAsync(bc => bc.Id == bankAccountId);
         }
     }
 

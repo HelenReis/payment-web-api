@@ -19,5 +19,7 @@ namespace Payment.Data.Repositories
         Task<BankAccount> GetById(long bankAccountId);
 
         IQueryable<BankAccount> Query();
+
+        Task<bool> AnyAsync(long bankAccountId);
     }
 }

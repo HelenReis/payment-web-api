@@ -1,4 +1,5 @@
-﻿using Payment.Data.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Payment.Data.Repositories;
 using Payment.Data.Repositories.Transaction.UnitOfWork;
 using Payment.Domain.FileModels;
 using Payment.Domain.Models;
@@ -90,7 +91,11 @@ namespace Payment.Service.Comandos.FinancialPosting.ImportFile
 
         #region[Verifica se o arquivo foi importado antes]
         private async Task<bool> ExistingImportedFile(ImportedFileFile importedFile, BankAccountFile bankAccount)
-            => await _repoImportedFile.Any(bankAccount.Id, importedFile.Dtserver);
+            => await _repoImportedFile
+                .Query()
+                .Where(i => i.DtServer.Equals(importedFile.Dtserver) &&
+                            i.BankAccountId == bankAccount.Id)
+                .AnyAsync();
         #endregion
 
         #region [Insere arquivo importado]
@@ -104,7 +109,7 @@ namespace Payment.Service.Comandos.FinancialPosting.ImportFile
         #region [Insere cliente]
         private async Task SaveObject()
         {
-            var existingClient = await _repoClient.Any(_params.ClientId);
+            var existingClient = await _repoClient.AnyAsync(_params.ClientId);
             if (!existingClient)
             {
                 var newBankAccount = new Client(_params.ClientId, "Aleatório");
