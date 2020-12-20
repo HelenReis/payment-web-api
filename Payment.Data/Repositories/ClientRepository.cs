@@ -2,6 +2,7 @@
 using Payment.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,6 +40,11 @@ namespace Payment.Data.Repositories
         public async Task<bool> AnyAsync(int clientId)
         {
             return await _context.Client.AnyAsync(c => c.Id == clientId);
+        }
+
+        public IQueryable<Client> Query()
+        {
+            return _context.Client.AsQueryable();
         }
     }
 }

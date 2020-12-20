@@ -24,6 +24,9 @@ namespace Payment.Service.Comandos.BankAccount.UpdateBankAccount
         {
             try
             {
+                if (!await ExistingBankAccount(param.BankAccountId))
+                    return new UpdateBankAccountResult(false, "Conta bancária não encontrada na base de dados");
+
                 var bankAccount = await _repoBankAccount.GetById(param.BankAccountId);
                 bankAccount.TypeAccount = param.BankAccountPatch.TypeAccount;
                 await _unitOfWork.Commit();
@@ -35,5 +38,8 @@ namespace Payment.Service.Comandos.BankAccount.UpdateBankAccount
                 throw new Exception(ex.Message);
             }
         }
+
+        private async Task<bool> ExistingBankAccount(long bankAccountId)
+            => await _repoBankAccount.AnyAsync(bankAccountId);
     }
 }

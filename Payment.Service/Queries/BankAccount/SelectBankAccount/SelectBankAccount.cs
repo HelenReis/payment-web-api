@@ -20,8 +20,10 @@ namespace Payment.Service.Queries.BankAccount.SelectBankAccount
         {
             try
             {
-                var bankAccount = await _repoBankAccount.GetById(param.BankAccountId);
+                if (!await ExistingBankAccount(param.BankAccountId))
+                    return new SelectBankAccountResult(false, "Conta bancária não encontrada na base de dados", null);
 
+                var bankAccount = await _repoBankAccount.GetById(param.BankAccountId);
                 return new SelectBankAccountResult(true, "OK", bankAccount);
             }
             catch (Exception ex)
@@ -29,5 +31,8 @@ namespace Payment.Service.Queries.BankAccount.SelectBankAccount
                 throw new Exception(ex.Message);
             }
         }
+
+        private async Task<bool> ExistingBankAccount(long bankAccountId)
+            => await _repoBankAccount.AnyAsync(bankAccountId);
     }
 }

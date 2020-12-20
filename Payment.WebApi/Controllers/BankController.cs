@@ -18,7 +18,5 @@ namespace Payment.WebApi.Controllers
         {
             _logger = logger;
         }
-
-
     }
 }
