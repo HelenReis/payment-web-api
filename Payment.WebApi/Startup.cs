@@ -35,7 +35,7 @@ namespace Payment.WebApi
             /*COLOCAR NUMA CONNECTION STRING*/
             /* VERIFICAR PROBLEMA DOCKER NO MYSQL PROVIDER */
             services.AddDbContext<PaymentContext>(options => 
-                options.UseMySQL("server = localhost; port = 3306; database = payment; Uid = root; Pwd = root;"));
+                options.UseMySQL(Configuration.GetConnectionString("Payment")));
 
             // Repositórios
             services.AddTransient<IBankAccountRepository, BankAccountRepository>();
